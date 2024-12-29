@@ -1,0 +1,149 @@
+local player = game.Players.LocalPlayer
+
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+local Window = OrionLib:MakeWindow({
+    Name = "Cynix Z Hub",
+    HidePremium = false,
+    SaveConfig = true,
+    ConfigFolder = "ScamConfig"
+})
+
+-- Notify Function
+local function Notify(title, content)
+    OrionLib:MakeNotification({
+        Name = title,
+        Content = content,
+        Image = "rbxassetid://4483345998",
+        Time = 5
+    })
+end
+
+-- Tab 1: Trade Scam
+local TradeScamTab = Window:MakeTab({
+    Name = "TRADE SCAM",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
+})
+
+-- Activate Trade Scam Toggle
+local isTradeScamEnabled = false
+TradeScamTab:AddToggle({
+    Name = "Activate Trade Scam Toggle",
+    Default = false,
+    Callback = function(Value)
+        isTradeScamEnabled = Value
+        print("Trade Scam Active: " .. tostring(Value))
+    end
+})
+
+-- Enter Victim's Username Section
+local victimUsername = ""
+TradeScamTab:AddTextbox({
+    Name = "Enter Victim's Username",
+    Default = "",
+    TextDisappear = true,
+    Callback = function(Value)
+        victimUsername = Value
+        print("Victim's username: " .. Value)
+    end
+})
+
+-- Trade Freeze The User Button
+TradeScamTab:AddButton({
+    Name = "Trade Freeze The User",
+    Callback = function()
+        if not isTradeScamEnabled then
+            Notify("Error", "Turn on toggle to activate trade scam.")
+        elseif victimUsername == "" then
+            Notify("Error", "Enter username.")
+        else
+            Notify("Trade Scamming", "Trade Scam Activated for " .. victimUsername)
+        end
+    end
+})
+
+-- Tab 2: Fruit Duper
+local FruitDuperTab = Window:MakeTab({
+    Name = "Fruit Duper",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
+})
+
+-- Enable Fruit Dupe Toggle
+local isFruitDupeEnabled = false
+FruitDuperTab:AddToggle({
+    Name = "Enable Fruit Dupe",
+    Default = false,
+    Callback = function(Value)
+        isFruitDupeEnabled = Value
+        print("Fruit Dupe Active: " .. tostring(Value))
+    end
+})
+
+-- Fruit To Dupe Dropdown
+local selectedFruit = "None"
+FruitDuperTab:AddDropdown({
+    Name = "Select Fruit",
+    Default = "None",
+    Options = {
+        "None", "Rocket 🚀", "Spin 😵‍💫", "Blade 🗡️", "Spring 🦿", "Bomb 💣", "Smoke 💨", "Spike 🦔",
+        "Flame🔥", "Falcon 🦅", "Ice 🧊", "Sand ⛱️", "Dark 🕳️", "Diamond 💎", "Light 💡", "Rubber 🦴", "Barrier 🚧",
+        "Ghost 👻", "Magma 🌋", "Quake 🌍", "Buddha ☸️", "Love ❤️", "Spider 🕷️", "Sound 🔊", "Phoenix 🐦‍🔥", "Portal 🌀",
+        "Rumble ⛈️", "Pain 🤧", "Blizzard 🌪️", "Gravity ☄️", "T-Rex 🦖", "Mammoth 🐘", "Dough 🍩", "Shadow 👥", 
+        "Venom 🐍", "Gas 😮‍💨", "Control 🔵", "Spirit 😱", "Leopard 🐆", "Yeti 🐒", "Kitsune 🐾", "Dragon 🐲"
+    },
+    Callback = function(Value)
+        selectedFruit = Value
+        print("Fruit selected: " .. Value)
+    end
+})
+
+-- Select Amount of Fruit Textbox
+FruitDuperTab:AddTextbox({
+    Name = "Select Amount of Fruit",
+    Default = "1",
+    TextDisappear = true,
+    Callback = function(Value)
+        print("Amount of fruit to dupe: " .. Value)
+    end
+})
+
+-- Dupe Selected Fruit Button
+FruitDuperTab:AddButton({
+    Name = "Dupe Selected Fruit",
+    Callback = function()
+        if not isFruitDupeEnabled then
+            Notify("Error", "Enable Fruit Dupe")
+        elseif selectedFruit == "None" then
+            Notify("Error", "Select The Fruit")
+        else
+            Notify("Dupe Activated", "Fruit Is Duping...")
+        end
+    end
+})
+
+-- Tab 3: About Me
+local AboutMeTab = Window:MakeTab({
+    Name = "About Me",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
+})
+
+local AboutMeSection = AboutMeTab:AddSection({
+    Name = "Version Info"
+})
+
+AboutMeSection:AddLabel("Version: 1.0")
+AboutMeSection:AddLabel("Script made by Cynix Z")
+AboutMeSection:AddLabel("This script is made to dupe fruit and scam trade in Blox Fruits")
+
+AboutMeSection:AddButton({
+    Name = "Click to see my Youtube Channel",
+    Callback = function()
+        setclipboard("https://youtube.com/@cynixz_roblox")
+        Notify("Clipboard", "Youtube URL copied in clipboard!")
+    end
+})
+
+-- Initialize Orion
+OrionLib:Init()
